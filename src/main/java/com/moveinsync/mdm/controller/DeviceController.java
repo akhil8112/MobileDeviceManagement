@@ -1,5 +1,5 @@
 package com.moveinsync.mdm.controller;
-
+import com.moveinsync.mdm.dto.UpdateStatusRequest;
 import com.moveinsync.mdm.entity.Device;
 import com.moveinsync.mdm.service.DeviceService;
 import java.util.*;
@@ -9,6 +9,10 @@ import org.springframework.web.bind.annotation.*;
 import com.moveinsync.mdm.dto.HeartbeatRequest;
 import com.moveinsync.mdm.dto.HeartbeatResponse;
 import java.util.Optional;
+
+
+import org.springframework.web.bind.annotation.*;
+
 
 @RestController
 @RequestMapping("/api/device")
@@ -23,11 +27,15 @@ public class DeviceController {
         return deviceService.registerDevice(device);
     }
 
-    @GetMapping("/{deviceId}")
-    public Optional<Device> getDevice(@PathVariable String deviceId) {
-
-        return deviceService.getDevice(deviceId);
-    }
+//    @GetMapping("/{deviceId}")
+//    public Optional<Device> getDevice(@PathVariable String deviceId) {
+//
+//        return deviceService.getDevice(deviceId);
+//    }
+@GetMapping("/{deviceId}")
+public Device getDevice(@PathVariable String deviceId) {
+    return deviceService.getDevice(deviceId);
+}
     @GetMapping("/check-version/{imei}/{version}")
     public ResponseEntity<String> checkVersion(
             @PathVariable String imei,
@@ -47,5 +55,13 @@ public class DeviceController {
 
         return deviceService.heartbeat(request);
 
+    }
+    @PostMapping("/update-status")
+    public ResponseEntity<String> updateStatus(
+            @RequestBody UpdateStatusRequest request) {
+
+        deviceService.updateStatus(request);
+
+        return ResponseEntity.ok("Status updated successfully");
     }
 }

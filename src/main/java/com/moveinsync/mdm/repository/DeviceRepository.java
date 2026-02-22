@@ -9,7 +9,8 @@ public interface DeviceRepository extends JpaRepository<Device, Long> {
 
     Optional<Device> findByDeviceId(String deviceId);
     Optional<Device> findByImei(String imei);
-    List<Device> findByRegion(String region);
+    List<Device> findByRegionIgnoreCase(String region);
+//    List<Device> findByRegion(String region);
 
 
 
